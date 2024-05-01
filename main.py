@@ -1,4 +1,5 @@
 import sqlalchemy
+import parser
 from flask import Flask, redirect, render_template
 from flask_login import LoginManager, UserMixin, login_user
 from data import db_session
@@ -51,6 +52,21 @@ def login():
                                message="Неправильный логин или пароль",
                                form=form)
     return render_template('login.html', title='Авторизация', form=form)
+
+
+@app.route('/')
+def start():
+    return render_template('start.html')
+
+
+@app.route('/register')
+def register():
+    return
+
+
+@app.route('/main')
+def main():
+    return
 
 
 if __name__ == '__main__':
