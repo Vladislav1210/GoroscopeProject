@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Гороскоп</title>
+</head>
+<body>
+  <h1 align="center">
+    Гороскоп
+  </h1>
+<p><b>
+    Гороскоп на сегодня расскажет, как пройдет день, каким будет настроение, легко ли будут даваться дела,
+    как сложатся отношения с окружающими людьми. Он поможет расставить приоритеты в делах и грамотно спланировать время.
+</b></p>
+  <p align="center">Выберите свой знак зодиака</p>
+<div align="center">
+    <form action="/main2" method="post">
+    <select id="znak">
+        <option></option>
+        <option>Овен</option>
+        <option>Телец</option>
+        <option>Близнецы</option>
+        <option>Рак</option>
+        <option>Лев</option>
+        <option>Дева</option>
+        <option>Весы</option>
+        <option>Скорпион</option>
+        <option>Стрелец</option>
+        <option>Козерог</option>
+        <option>Водолей</option>
+        <option>Рыбы</option>
+    </select>
+        <input type="submit" value="Выбрать" href="/main2">
+    </form>
+    <p>{{ text }}</p>
+</div>
+</body>
+</html>

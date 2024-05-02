@@ -1,15 +1,18 @@
 import requests
 import bs4
 
-ru_eng_znak = {'Овен': 'oven', 'Телец': 'telec',
-               'Близнецы': 'bliznecy', 'Рак': 'rak',
-               'Лев': 'lev', 'Дева': 'deva',
-               'Весы': 'vesy', 'Скорпион': 'skorpion',
-               'Стрелец': 'strelec', 'Козерог': 'kozerog',
-               'Водолей': 'vodoley', 'Рыбы': 'ryby'}
-
 
 def parser(znak):
+
+    ru_eng_znak = {'Овен': 'oven', 'Телец': 'telec',
+                   'Близнецы': 'bliznecy', 'Рак': 'rak',
+                   'Лев': 'lev', 'Дева': 'deva',
+                   'Весы': 'vesy', 'Скорпион': 'skorpion',
+                   'Стрелец': 'strelec', 'Козерог': 'kozerog',
+                   'Водолей': 'vodoley', 'Рыбы': 'ryby'}
+
+    if znak == '':
+        return ''
     url = f"https://my-calend.ru/goroskop/{ru_eng_znak[znak]}"
     response = requests.get(url)
     if response:
