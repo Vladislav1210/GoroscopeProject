@@ -2,20 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Гороскоп</title>
+    <title style="font-size: 60px">Гороскоп</title>
 </head>
 <body>
   <h1 align="center">
     Гороскоп
   </h1>
-<p><b>
+<p style="font-size: 35px"><b>
     Гороскоп на сегодня расскажет, как пройдет день, каким будет настроение, легко ли будут даваться дела,
     как сложатся отношения с окружающими людьми. Он поможет расставить приоритеты в делах и грамотно спланировать время.
 </b></p>
-  <p align="center">Выберите свой знак зодиака</p>
+  <p align="center" style="font-size: 25px">Выберите свой знак зодиака</p>
 <div align="center">
-    <form action="/main2" method="post">
-    <select id="znak">
+    <form class="select-form" action="" method="post">
+    <select class="form-control" id="znak" name="znak">
         <option></option>
         <option>Овен</option>
         <option>Телец</option>
@@ -30,9 +30,9 @@
         <option>Водолей</option>
         <option>Рыбы</option>
     </select>
-        <input type="submit" value="Выбрать" href="/main2">
+        <input type="submit" value="Выбрать">
+    <p style="font-size: 30px">{{ text }}</p>
     </form>
-    <p>{{ text }}</p>
 </div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 import requests
 import bs4
+import html5lib
 
 
 def parser(znak):

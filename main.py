@@ -1,5 +1,6 @@
 import sqlalchemy
 import parser
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Flask, redirect, render_template, request
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 from data import db_session
@@ -19,7 +20,10 @@ class User(SqlAlchemyBase, UserMixin):
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True,
                            autoincrement=True)
     email = sqlalchemy.Column(sqlalchemy.String)
-    password = sqlalchemy.Column(sqlalchemy.Boolean)
+    password = sqlalchemy.Column(sqlalchemy.String)
+
+    def check_password(self, password2):
+        return check_password_hash(self.password, password2)
 
 
 class LoginForm(FlaskForm):
@@ -48,15 +52,19 @@ def load_user(user_id):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         user = db_sess.query(User).filter(User.email == form.email.data).first()
+
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
-            return redirect("/")
+            return redirect("/main")
+
         return render_template('login.html',
                                message="Неправильный логин или пароль",
-                               form=form)
+                               form=form, title='Авторизация')
+
     return render_template('login.html', title='Авторизация', form=form)
 
 
@@ -77,8 +85,13 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
-        db_sess.add(form)
+        user = User()
+        user.email = form.email.data
+        user.password = generate_password_hash(form.password.data)
+
+        db_sess.add(user)
         db_sess.commit()
+        db_sess.close()
         return redirect('/main')
     return render_template('register.html', title='Регистрация', form=form)
 
@@ -86,16 +99,14 @@ def register():
 @app.route('/main', methods=['POST', 'GET'])
 def main():
     text = ''
-    return render_template('main.html', text=text)
-
-
-@app.route('/main2', methods=['POST', 'GET'])
-def main2():
-    frm = request.form['znak']
-    text = parser.parser(frm)
-    return render_template('main.html', text=text)
+    if request.method == 'GET':
+        return render_template('main.html', text=text)
+    elif request.method == 'POST':
+        frm = request.form['znak']
+        text = f'{frm} - ' + parser.parser(frm)
+        return render_template('main.html', text=text)
 
 
 if __name__ == '__main__':
     db_session.global_init("db/blogs.sqlite")
-    app.run(port=8080, host='127.0.0.1')
+    app.run(port=8080, host='127.0.0.2')
